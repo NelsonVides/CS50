@@ -1,0 +1,28 @@
+0. What is pneumonoultramicroscopicsilicovolcanoconiosis?
+    The longest word to be checked in our dictionaries
+
+1. According to its man page, what does getrusage do?
+    returns resource usage measures for who
+
+2. Per that same man page, how many members are in a variable of type struct rusage?
+    16
+
+3. Why do you think we pass before and after by reference (instead of by value) to calculate, even though we’re not changing their contents?
+    Because C requires passing structs by reference in functions, because by value, the size would be too big
+
+4. Explain as precisely as possible, in a paragraph or more, how main goes about reading words from a file. In other words, convince us that you indeed understand how that function’s for loop works.
+        Speller goes through the characters of the file, reading one by one
+        Each time we access the file characters by fgetc, the stream of the
+    file moves by a byte, therefore the "for" loop keeps reading
+    characters just one by one.
+        Then, within the loop and with just one character at a time, it
+    analises if such character is alphabetical, numerical, the end of the
+    word, or even more importantly the end of the file (EOF), and copies
+    such in the "word" array, finishing it with the '\0' needed. Then,
+    it passes this word-array to the checker.
+
+5. Why do you think we used fgetc to read each word’s characters one at a time rather than use fscanf with a format string like "%s" to read whole words at a time? Put another way, what problems might arise by relying on fscanf alone?
+
+
+6. Why do you think we declared the parameters for check and load as const (which means "constant")?
+    Because we do not want to modify them at any time?
