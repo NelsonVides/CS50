@@ -1,0 +1,54 @@
+#!/usr/bin/env python3
+"""
+    1 .accepts one and only one command-line argument
+        , the screen name for a user on Twitter
+    2. queries Twitter’s API for a user’s most recent 50 tweets,
+    3. analyzes the sentiment of each of those tweets, and
+    4. outputs each tweet’s score and text
+        , colored in green if positive, red if negative
+        , and yellow otherwise.
+"""
+
+
+import os
+import sys
+
+from analyzer import Analyzer
+from termcolor import colored
+from helpers import get_user_timeline
+
+def main():
+
+    # ensure proper usage
+    if len(sys.argv) != 2:
+        sys.exit("Usage: ./tweets @screen_name")
+
+    # absolute paths to lists
+    positives = os.path.join(sys.path[0], "positive-words.txt")
+    negatives = os.path.join(sys.path[0], "negative-words.txt")
+
+    # instantiate analyzer
+    analyzer = Analyzer(positives, negatives)
+    
+    # get_user_timeline returns a collection,
+    # which we now must glue together into just one string
+    screen_name = sys.argv[1].strip('@')
+    text = get_user_timeline(screen_name, count=100)
+    if text == None:
+        print("No tweets for {}".format(screen_name))
+        return None
+    
+    print("shit")    
+    # analyze word
+    for tweet in text:
+        score = analyzer.Analyzer(tweet)
+        if score > 0.0:
+            print("{} {}".format(colored(score, "green"), colored(tweet, "green")))
+        elif score < 0.0:
+            print("{} {}".format(colored(score, "red"), colored(tweet, "red")))
+        else:
+            print("{} {}".format(colored(score, "yellow"), colored(tweet, "yellow")))
+    
+
+if __name__ == "__main__":
+    main()
